@@ -25,7 +25,7 @@ public class ReactiveChatCommandLineRunner implements CommandLineRunner {
     private static final List<User> DEFAULT_USERS = List.of(
         User.builder().id(1L).nickname("system").build(),
         User.builder().id(2L).nickname("wizard").firstName("John").lastName("Irenicus").build(),
-        User.builder().id(3L).nickname("jedi").firstName("Lunke").lastName("Skywalker").build()
+        User.builder().id(3L).nickname("jedi").firstName("Luke").lastName("Skywalker").build()
     );
 
     private final ReactiveMongoTemplate reactiveMongoTemplate;
