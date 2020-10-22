@@ -15,7 +15,7 @@ import reactor.core.publisher.Mono;
  * @since 19.10.2020
  */
 @Log4j2
-@RestController
+//@RestController
 @AllArgsConstructor
 public class UserController {
 
@@ -24,17 +24,18 @@ public class UserController {
     @GetMapping("/users")
     public Flux<User> getUsers() {
         return userService.getUsers()
+            .doOnNext(x -> {
+                throw new RuntimeException("Exception");
+            })
             .doOnSubscribe(s -> log.debug("Called 'getUsers'."))
-            .doOnNext(u -> log.debug("Got a user={}.", u))
-            .doOnError(e -> log.debug("Got an error={}.", e));
+            .doOnNext(u -> log.debug("Got a user={}.", u));
     }
 
     @GetMapping("/users/{id}")
     public Mono<User> getUser(@PathVariable Long id) {
         return userService.findById(id)
             .doOnSubscribe(s -> log.debug("Called 'getUser' by id={}.", id))
-            .doOnSuccess(m -> log.debug("User {} has been founded.", m))
-            .doOnError(e -> log.debug("Got an error={}.", e));
+            .doOnSuccess(m -> log.debug("User {} has been founded.", m));
     }
 
 }
